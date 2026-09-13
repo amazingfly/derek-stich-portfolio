@@ -1,19 +1,13 @@
-import { Hero } from "@/components/hero"
-import { TechStack } from "@/components/tech-stack"
+import { ProfilePanel } from "@/components/profile-panel"
 import { Projects } from "@/components/projects"
-import { SystemsStatus } from "@/components/systems-status"
-import { Experience } from "@/components/experience"
-import { SiteFooter } from "@/components/site-footer"
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <Hero />
-      <TechStack />
-      <Projects />
-      <SystemsStatus />
-      <Experience />
-      <SiteFooter />
+    <main className="min-h-screen bg-background text-foreground lg:flex lg:items-start">
+      <ProfilePanel />
+      <div className="lg:w-[65%]">
+        <Projects />
+      </div>
     </main>
   )
 }
