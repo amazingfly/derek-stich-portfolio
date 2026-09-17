@@ -1,12 +1,11 @@
-import { Mail, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, Mail } from "lucide-react"
 import { GithubIcon } from "./github-icon"
+import { LabStatus } from "./lab-status"
 import { SkillsMatrix } from "./skills-matrix"
-import { ServerStatusCard } from "./server-status-card"
 
 export function ProfilePanel() {
   return (
-    <aside className="relative border-b border-border lg:sticky lg:top-0 lg:h-screen lg:w-[35%] lg:shrink-0 lg:overflow-y-auto lg:border-b-0 lg:border-r">
-      {/* ambient glow */}
+    <aside className="relative overflow-x-hidden border-b border-border lg:sticky lg:top-0 lg:h-screen lg:w-[35%] lg:shrink-0 lg:overflow-y-auto lg:border-r lg:border-b-0">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-32 left-1/2 h-[380px] w-[520px] -translate-x-1/2 rounded-full bg-primary/10 blur-[110px]"
@@ -23,14 +22,14 @@ export function ProfilePanel() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
             </span>
-            Available for applied AI &amp; backend
+            Available for applied AI & backend
           </div>
 
           <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">Derek Stich</h1>
-          <p className="mt-2 font-mono text-base text-primary sm:text-lg">Applied AI &amp; Software Engineer</p>
+          <p className="mt-2 font-mono text-base text-primary sm:text-lg">Applied AI & Software Engineer</p>
           <p className="mt-5 text-pretty text-sm leading-relaxed text-muted-foreground">
-            Specializing in Python microservices, local LLM orchestration, RAG pipelines, and automated backend
-            systems running on self-hosted Linux GPU infrastructure.
+            Python microservices, local LLM orchestration, generative media pipelines, and accessible systems on
+            self-hosted Linux GPU infrastructure.
           </p>
         </div>
 
@@ -67,8 +66,7 @@ export function ProfilePanel() {
         </div>
 
         <SkillsMatrix />
-
-        <ServerStatusCard />
+        <LabStatus />
 
         <p className="mt-2 border-t border-border pt-6 font-mono text-xs text-muted-foreground">
           © {new Date().getFullYear()} Derek Stich
