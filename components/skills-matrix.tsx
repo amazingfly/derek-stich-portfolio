@@ -1,4 +1,4 @@
-import { Brain, Server, Database, Cpu } from "lucide-react"
+import { Brain, Cpu, Database, Server } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
 type StackGroup = {
@@ -10,31 +10,29 @@ type StackGroup = {
 const groups: StackGroup[] = [
   {
     icon: Brain,
-    title: "AI & LLM Engineering",
+    title: "AI & media systems",
     items: [
-      "LLM APIs",
-      "Local Inference (Qwen 3.5)",
-      "RAG Architectures",
-      "Prompt Pipelines",
-      "PyTorch",
-      "OpenCV",
-      "CUDA",
+      "Local LLMs (Qwen 3.5, llama.cpp, Ollama)",
+      "LTX-Video / SA3",
+      "SDXL · FLUX · LoRA",
+      "RAG & prompt pipelines",
+      "PyTorch · CUDA",
     ],
   },
   {
     icon: Server,
-    title: "Backend & Microservices",
-    items: ["Python (FastAPI, Flask)", "Golang", "RESTful APIs", "AMQP/RabbitMQ", "Node.js", "Async Workflows"],
+    title: "Backend & orchestration",
+    items: ["Python (FastAPI)", "Golang", "Resumable pipelines", "Colab workers", "Async queues"],
   },
   {
     icon: Database,
-    title: "Databases & Infrastructure",
-    items: ["PostgreSQL", "Vector Databases", "Redis", "Docker", "AWS Lambda", "Linux Admin"],
+    title: "Data & infrastructure",
+    items: ["PostgreSQL", "SQLite", "Docker", "Linux GPU hosts", "Provenance / checkpoints"],
   },
   {
     icon: Cpu,
-    title: "Hardware & AI Edge",
-    items: ["ESP32", "MicroPython", "Raspberry Pi", "NVIDIA Jetson", "Circuit Design"],
+    title: "Accessibility & edge",
+    items: ["OCR + Piper TTS", "ESP32 / MicroPython", "Assistive navigation", "Self-hosted inference"],
   },
 ]
 
