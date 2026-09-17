@@ -18,8 +18,11 @@ export function VideoCarousel() {
   }, [])
 
   useEffect(() => {
-    const node = stripRef.current?.querySelector<HTMLButtonElement>(`[data-clip="${index}"]`)
-    node?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" })
+    const strip = stripRef.current
+    const node = strip?.querySelector<HTMLButtonElement>(`[data-clip="${index}"]`)
+    if (!strip || !node) return
+    const left = node.offsetLeft - strip.clientWidth / 2 + node.clientWidth / 2
+    strip.scrollTo({ left: Math.max(0, left), behavior: "smooth" })
   }, [index])
 
   if (!clip) return null
