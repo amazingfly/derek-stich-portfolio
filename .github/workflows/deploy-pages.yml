@@ -29,15 +29,12 @@ jobs:
       - name: Enable corepack
         run: corepack enable
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: next
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build with Next.js
+        env:
+          NEXT_PUBLIC_BASE_PATH: /derek-stich-portfolio
         run: pnpm build
 
       - name: Upload artifact
