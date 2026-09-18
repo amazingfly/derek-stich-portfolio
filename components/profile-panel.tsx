@@ -1,7 +1,8 @@
-import { ArrowUpRight, Mail } from "lucide-react"
+import { ArrowUpRight, FileText, Mail } from "lucide-react"
 import { GithubIcon } from "./github-icon"
 import { LabStatus } from "./lab-status"
 import { SkillsMatrix } from "./skills-matrix"
+import { asset } from "@/lib/asset"
 
 export function ProfilePanel() {
   return (
@@ -40,6 +41,17 @@ export function ProfilePanel() {
           >
             <Mail className="h-4 w-4" />
             derekstich@gmail.com
+          </a>
+
+          <a
+            href={asset("/resume.pdf")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 rounded-lg border border-border bg-card/60 px-4 py-2.5 text-sm font-medium backdrop-blur transition-colors hover:border-primary/50 hover:bg-card"
+          >
+            <FileText className="h-4 w-4" />
+            <span className="font-mono">Resume (PDF)</span>
+            <ArrowUpRight className="ml-auto h-3.5 w-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
 
           <a
