@@ -2,7 +2,7 @@ name: Deploy Next.js site to Pages
 
 on:
   push:
-    branches: ["feat/media-showcase"]
+    branches: ["testing"]
   workflow_dispatch:
 
 permissions:
