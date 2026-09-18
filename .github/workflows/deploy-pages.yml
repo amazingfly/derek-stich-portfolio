@@ -29,6 +29,13 @@ jobs:
       - name: Enable corepack
         run: corepack enable
 
+      - name: Decode resume PDF
+        run: |
+          mkdir -p public
+          base64 -d public/resume.pdf.b64 > public/resume.pdf
+          ls -la public/resume.pdf
+          file public/resume.pdf
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
