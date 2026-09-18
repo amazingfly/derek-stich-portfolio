@@ -2,7 +2,7 @@ name: Deploy Next.js site to Pages
 
 on:
   push:
-    branches: ["feat/media-showcase"]
+    branches: ["testing"]
   workflow_dispatch:
 
 permissions:
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: feat/media-showcase
+          ref: testing
 
       - name: Setup Node
         uses: actions/setup-node@v4
