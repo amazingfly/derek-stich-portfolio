@@ -32,7 +32,7 @@ jobs:
       - name: Decode resume PDF
         run: |
           mkdir -p public
-          base64 -d public/resume.pdf.b64 > public/resume.pdf
+          cat public/resume.pdf.b64.part1 public/resume.pdf.b64.part2 | base64 -d > public/resume.pdf
           ls -la public/resume.pdf
           file public/resume.pdf
 
