@@ -1,4 +1,4 @@
-import { Eye, Lock, ScanSearch, Volume2 } from "lucide-react"
+import { Eye, Lock, ScanSearch } from "lucide-react"
 
 export function EvidencePanel({ kind }: { kind: "clscan" | "darklands" }) {
   if (kind === "clscan") {
