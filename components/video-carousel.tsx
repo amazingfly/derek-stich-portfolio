@@ -1,29 +1,49 @@
 "use client"
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { AutoplayVideo } from "@/components/autoplay-video"
-import { MUSIC_CLIPS } from "@/lib/videos"
+import { ALL_CLIPS, FEATURED_CLIPS, type MusicClip } from "@/lib/videos"
 import { cn } from "@/lib/utils"
 
 export function VideoCarousel() {
-  const [index, setIndex] = useState(0)
+  const [showAll, setShowAll] = useState(false)
+  const [id, setId] = useState(FEATURED_CLIPS[0]?.id ?? "19")
   const stripRef = useRef<HTMLDivElement>(null)
   const startX = useRef<number | null>(null)
-  const clip = MUSIC_CLIPS[index] ?? MUSIC_CLIPS[0]
 
-  const go = useCallback((next: number) => {
-    const len = MUSIC_CLIPS.length
-    setIndex(((next % len) + len) % len)
-  }, [])
+  const playlist: MusicClip[] = useMemo(() => (showAll ? ALL_CLIPS : FEATURED_CLIPS), [showAll])
+
+  const index = Math.max(
+    0,
+    playlist.findIndex((item) => item.id === id),
+  )
+  const clip = playlist[index] ?? playlist[0]
+
+  const go = useCallback(
+    (next: number) => {
+      const len = playlist.length
+      const wrapped = ((next % len) + len) % len
+      const target = playlist[wrapped]
+      if (target) setId(target.id)
+    },
+    [playlist],
+  )
+
+  useEffect(() => {
+    if (!playlist.some((item) => item.id === id)) {
+      const fallback = playlist[0]
+      if (fallback) setId(fallback.id)
+    }
+  }, [id, playlist])
 
   useEffect(() => {
     const strip = stripRef.current
-    const node = strip?.querySelector<HTMLButtonElement>(`[data-clip="${index}"]`)
+    const node = strip?.querySelector<HTMLButtonElement>(`[data-clip="${id}"]`)
     if (!strip || !node) return
     const left = node.offsetLeft - strip.clientWidth / 2 + node.clientWidth / 2
     strip.scrollTo({ left: Math.max(0, left), behavior: "smooth" })
-  }, [index])
+  }, [id, showAll])
 
   if (!clip) return null
 
@@ -42,11 +62,20 @@ export function VideoCarousel() {
       }}
       className="flex min-w-0 flex-col gap-3 overflow-hidden rounded-xl border border-border bg-background/80 p-3 sm:p-4"
     >
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">{clip.label}</p>
-        <p className="font-mono text-xs text-muted-foreground">
-          {String(index + 1).padStart(2, "0")} / {String(MUSIC_CLIPS.length).padStart(2, "0")}
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="font-mono text-xs text-muted-foreground">
+            {String(index + 1).padStart(2, "0")} / {String(playlist.length).padStart(2, "0")}
+          </p>
+          <button
+            type="button"
+            onClick={() => setShowAll((value) => !value)}
+            className="rounded-md border border-border bg-card px-2.5 py-1 font-mono text-xs text-foreground hover:border-primary/50"
+          >
+            {showAll ? "Featured cuts" : "All shorts"}
+          </button>
+        </div>
       </div>
 
       <div
@@ -94,17 +123,17 @@ export function VideoCarousel() {
       </div>
 
       <div ref={stripRef} className="flex w-full min-w-0 gap-2 overflow-x-auto pb-1" aria-label="Clip filmstrip">
-        {MUSIC_CLIPS.map((item, i) => (
+        {playlist.map((item) => (
           <button
             key={item.id}
             type="button"
-            data-clip={i}
-            onClick={() => go(i)}
-            aria-current={i === index}
+            data-clip={item.id}
+            onClick={() => setId(item.id)}
+            aria-current={item.id === id}
             aria-label={item.label}
             className={cn(
               "relative h-20 w-14 shrink-0 overflow-hidden rounded-sm border",
-              i === index ? "border-primary" : "border-border opacity-70 hover:opacity-100",
+              item.id === id ? "border-primary" : "border-border opacity-70 hover:opacity-100",
             )}
           >
             <img src={item.poster} alt="" className="size-full object-cover" draggable={false} />

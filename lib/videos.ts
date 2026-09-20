@@ -42,12 +42,20 @@ function clip(file: string): MusicClip {
   }
 }
 
-/** Featured first: clip 19, then 20, then 01–18. */
-export const MUSIC_CLIPS: MusicClip[] = [
-  clip(FILES[18]),
-  clip(FILES[19]),
-  ...FILES.slice(0, 18).map(clip),
+const BY_ID: Record<string, MusicClip> = Object.fromEntries(FILES.map((file) => [file.slice(0, 2), clip(file)]))
+
+/** Lead cuts a hiring manager actually watches. Clip 19 first. */
+export const FEATURED_CLIP_IDS = ["19", "20", "18", "07", "01"] as const
+
+export const FEATURED_CLIPS: MusicClip[] = FEATURED_CLIP_IDS.map((id) => BY_ID[id]!)
+
+/** Full library: featured first, then the remaining shorts. */
+export const ALL_CLIPS: MusicClip[] = [
+  ...FEATURED_CLIPS,
+  ...FILES.map(clip).filter((item) => !FEATURED_CLIP_IDS.includes(item.id as (typeof FEATURED_CLIP_IDS)[number])),
 ]
+
+export const MUSIC_CLIPS = ALL_CLIPS
 
 export const STORYBOOK_VIDEO = {
   src: asset("/videos/storybook/storybook_curated.mp4"),

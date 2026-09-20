@@ -28,7 +28,10 @@ export function ProfilePanel() {
 
           <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">Derek Stich</h1>
           <p className="mt-2 font-mono text-base text-primary sm:text-lg">Applied AI & Software Engineer</p>
-          <p className="mt-5 text-pretty text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-3 text-pretty text-sm font-medium leading-relaxed text-foreground">
+            Looking for applied-AI and backend roles where I own the pipeline, not just the prompt.
+          </p>
+          <p className="mt-4 text-pretty text-sm leading-relaxed text-muted-foreground">
             Python microservices, local LLM orchestration, generative media pipelines, and accessible systems on
             self-hosted Linux GPU infrastructure.
           </p>
