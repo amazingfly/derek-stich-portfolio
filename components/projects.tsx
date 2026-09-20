@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import type { ReactNode } from "react"
 import { AutoplayVideo } from "@/components/autoplay-video"
+import { EvidencePanel } from "@/components/evidence-panel"
 import { GithubIcon } from "@/components/github-icon"
 import { VideoCarousel } from "@/components/video-carousel"
 import { FEATURED, STACK, type Project } from "@/lib/projects"
@@ -55,27 +56,27 @@ function RepoLink({ href, children }: { href: string; children?: ReactNode }) {
   )
 }
 
+function CaseBlock({ label, body }: { label: string; body: string }) {
+  return (
+    <div>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">{label}</p>
+      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{body}</p>
+    </div>
+  )
+}
+
 function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="min-w-0 overflow-hidden rounded-xl border border-border bg-card/50 p-6 sm:p-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">Project {project.index}</p>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">Case {project.index}</p>
           <h3 className="mt-2 text-xl font-semibold tracking-tight sm:text-2xl">{project.title}</h3>
         </div>
         {project.href ? <RepoLink href={project.href} /> : null}
       </div>
 
-      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-
-      <ul className="mt-5 space-y-2">
-        {project.highlights.map((item) => (
-          <li key={item} className="flex gap-2.5 text-sm text-muted-foreground">
-            <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
-            <span className="leading-relaxed">{item}</span>
-          </li>
-        ))}
-      </ul>
+      <p className="mt-3 text-sm leading-relaxed text-foreground">{project.result}</p>
 
       <div className="mt-6 flex flex-col gap-5">
         {project.media === "music-carousel" ? <VideoCarousel /> : null}
@@ -92,8 +93,19 @@ function ProjectCard({ project }: { project: Project }) {
             />
           </div>
         ) : null}
-        {project.architecture ? <Architecture steps={project.architecture} /> : null}
+        {project.evidence ? <EvidencePanel kind={project.evidence} /> : null}
       </div>
+
+      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+        <CaseBlock label="Problem" body={project.problem} />
+        <CaseBlock label="Approach" body={project.approach} />
+      </div>
+
+      {project.architecture ? (
+        <div className="mt-5">
+          <Architecture steps={project.architecture} />
+        </div>
+      ) : null}
 
       {project.extraLinks && project.extraLinks.length > 0 ? (
         <ul className="mt-5 flex flex-wrap gap-3">
@@ -121,10 +133,9 @@ export function Projects() {
     <div className="flex min-w-0 flex-col gap-6 px-6 py-10 sm:px-8 lg:py-12">
       <div className="mb-2">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">Selected Work</p>
-        <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Featured Projects</h2>
+        <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Case studies</h2>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Work from the last month across generative media, local LLMs, and accessibility — with pipeline output on
-          the page, not placeholders.
+          Four systems from the last month. Artifact first, then the problem and how it was built.
         </p>
       </div>
 
@@ -136,7 +147,7 @@ export function Projects() {
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">Component repos</p>
         <h3 className="mt-2 text-xl font-semibold tracking-tight">Media stack</h3>
         <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-          The pipeline above is split so audio, images, video, and voice each have a dedicated checkout.
+          Supporting checkouts behind the pipelines above — not extra case studies.
         </p>
         <ul className="mt-5 grid gap-4 sm:grid-cols-2">
           {STACK.map((repo) => (
